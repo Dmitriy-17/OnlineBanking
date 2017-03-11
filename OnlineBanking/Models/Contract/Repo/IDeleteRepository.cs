@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OnlineBanking.Models.Contract.Repo
 {
-    interface IDeleteRepository<T> where T : IEntity
+    public interface IDeleteRepository<T> where T : IEntity
     {
         Task DeleteAsync(int id);
     }

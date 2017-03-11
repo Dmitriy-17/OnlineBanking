@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OnlineBanking.Models.Contract.Repo
 {
-    interface IUpdateRepository
+    public interface IUpdateRepository
     {
     }
 }
