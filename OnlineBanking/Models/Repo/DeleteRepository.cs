@@ -1,18 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Data.Entity;
 using OnlineBanking.Models.Contract;
 using OnlineBanking.Models.Contract.Repo;
 
 namespace OnlineBanking.Models.Repo
 {
-    public class DeleteRepository : IDeleteRepository<IEntity>
+    public class DeleteRepository<T> : IDeleteRepository<T> where T : class, IEntity
     {
-        public Task DeleteAsync(int id)
+        protected DbContext mContext;
+        public DeleteRepository(DbContext context)
         {
-            throw new NotImplementedException();
+            mContext = context;
         }
+        public void Delete(T entity)
+        {
+            mContext.Set<T>().Remove(entity);
+        }
+
+
     }
 }

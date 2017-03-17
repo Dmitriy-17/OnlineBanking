@@ -5,19 +5,32 @@ using System.Threading.Tasks;
 using System.Web;
 using OnlineBanking.Models.Contract;
 using OnlineBanking.Models.Contract.Repo;
+using System.Data.Entity;
+using System.Linq.Expressions;
 
 namespace OnlineBanking.Models.Repo
 {
-    public class ReadRepository : IReadRepository<T>
+    public class ReadRepository<T> : IReadRepository<T> where T : class, IEntity 
     {
-        public Task<IEnumerable<IEntity>> GetAllAsync(Func<T, bool> predicate = null)
+        protected DbContext mContext;
+        public ReadRepository(DbContext context)
         {
-            throw new NotImplementedException();
+            mContext = context;
         }
 
-        public Task<IEntity> GetByIdAsync(int id)
+        public async Task<IEntity> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await mContext.Set<T>().FindAsync(id);
+        }
+
+        public IEnumerable<IEntity> GetAll(Func<T, bool> predicate = null)
+        {
+            if (predicate == null)
+            {
+                return mContext.Set<T>().ToList();
+            }
+            var result = mContext.Set<T>().Where(predicate).ToList();
+            return result;
         }
     }
 }

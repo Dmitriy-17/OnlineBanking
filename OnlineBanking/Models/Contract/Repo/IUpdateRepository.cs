@@ -8,5 +8,6 @@ namespace OnlineBanking.Models.Contract.Repo
 {
     public interface IUpdateRepository
     {
+        void Update(IEntity entity);
     }
 }

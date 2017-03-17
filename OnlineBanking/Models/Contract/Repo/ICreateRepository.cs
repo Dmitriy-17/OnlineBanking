@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace OnlineBanking.Models.Contract.Repo
 {
-    public interface ICreateRepository<T>
+    public interface ICreateRepository<IEntity>
     {
-        Task<IEntity> CreateAsync(IEntity entity);
+        void CreateAsync(IEntity entity);
 
     }
 }

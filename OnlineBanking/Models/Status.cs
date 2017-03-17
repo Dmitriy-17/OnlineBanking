@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using OnlineBanking.Models.Contract;
 
 namespace OnlineBanking.Models
 {
     public class Status : IEntity
     {
+        [ScaffoldColumn(false)]
         public int Id { get; set; }
         public  string Name { get; set; }
         public virtual ICollection<Client> Clients { get; set; }

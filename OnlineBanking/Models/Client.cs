@@ -11,6 +11,7 @@ namespace OnlineBanking.Models
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public  string ContactNumber { get; set; }
         public DateTime DateOfBirth { get; set; }
         public bool Deposit { get; set; }
 

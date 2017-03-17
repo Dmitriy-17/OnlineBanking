@@ -5,7 +5,7 @@ using OnlineBanking.Models.Contract.Repo;
 
 namespace OnlineBanking.Models.Repo
 {
-    public class CreateRepository<TEntity> : ICreateRepository<IEntity> where TEntity : class
+    public class CreateRepository<T> : ICreateRepository<T> where T : class, IEntity
     {
         protected DbContext mContext;
 
@@ -14,10 +14,10 @@ namespace OnlineBanking.Models.Repo
             mContext = context;
         }
 
-        public Task<IEntity> CreateAsync(IEntity entity)
+        public  void CreateAsync(T entity)
         {
-            mContext.Set<TEntity>().Where();
-            //throw new NotImplementedException();
+            mContext.Set<T>().Add(entity);
+            mContext.SaveChanges();
         }
     }
 }
