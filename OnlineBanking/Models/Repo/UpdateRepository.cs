@@ -7,7 +7,10 @@ namespace OnlineBanking.Models.Repo
 {
     public class UpdateRepository<T> : BaseRepository, IUpdateRepository<T> where T : class, IEntity
     {
-        public UpdateRepository(DbContext context) : base(context) { }
+        public UpdateRepository(DbContext context) : base(context)
+        {
+            
+        }
 
         public void Update(T entity)
         {

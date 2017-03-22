@@ -54,7 +54,7 @@
 </md-content>
         <md-dialog-actions layout="row">
             <md-button ng-click="cancel()" class="md-raised">Отмена</md-button>
-            <md-button ng-disabled="regForm.$invalid" ng-click="addNew ?add(user) : update(client)" class="md-raised md-primary">{{text.button}}</md-button>
+            <md-button ng-disabled="regForm.$invalid" ng-click="addNew ?add(client) : update(client)" class="md-raised md-primary">{{text.button}}</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

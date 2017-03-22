@@ -40,6 +40,15 @@ namespace OnlineBanking.Controllers
             return Ok(res);
         }
 
+        [HttpPut, Route("api/clients/")]
+        public void Add(Client client)
+        {
+            if (client != null && client.IsValid())
+            {
+                PerformCall(() => mCreateRepository.Create(client));
+            }
+        }
+
         [HttpGet, Route("api/clients/")]
         public IHttpActionResult All([FromUri] Filter filter = null)
         {
@@ -74,10 +83,14 @@ namespace OnlineBanking.Controllers
             }
         }
 
-        [HttpGet, Route("api/clients/delete/{id:int}")]
-        public IHttpActionResult Delete([FromUri] Filter filter = null)
+        [HttpPost, Route("api/clients/remove/")]
+        public void Delete(Client entity)
         {
-            return null;
+            var clientExist = TryAction(() => mReadRepository.GetByIdAsync(entity.Id));
+            if (clientExist != null)
+            {
+                PerformCall(() => mDeleteRepository.Delete(entity));
+            }
         }
     }
 }

@@ -46,10 +46,14 @@ bankingApp.controller('ClientsController', function ($scope, $http, $location, $
             clickOutsideToClose: true
         });
         $mdDialog.show(confirm).then(function (data) {
-            clientsRepo.add(data);
-            client = data;
+            clientsRepo.add(data).then(function() {
+                $scope.clients.push(data);
+            });
         });
     };
 
+    $scope.delete = function(id) {
+        clientsRepo.remove(id);
+    }
 
 });

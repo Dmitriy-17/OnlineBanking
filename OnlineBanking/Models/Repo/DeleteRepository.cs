@@ -10,6 +10,7 @@ namespace OnlineBanking.Models.Repo
         public void Delete(T entity)
         {
             mContext.Set<T>().Remove(entity);
+            mContext.SaveChanges();
         }
 
 

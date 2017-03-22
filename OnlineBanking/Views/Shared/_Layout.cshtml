@@ -33,9 +33,7 @@
         @RenderBody()
         </div>
     </div>
-    <footer>
-        @DateTime.Now.Year Online Banking. All rights reserved
-    </footer>
+ 
 
     @Scripts.Render("~/bundles/jqueryval")
 
@@ -54,5 +52,9 @@
     <script src="../../Scripts/angular/controllers/dialogController.js"></script>
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <footer>
+        @DateTime.Now.Year Online Banking. All rights reserved
+    </footer>
 </body>
 </html>
