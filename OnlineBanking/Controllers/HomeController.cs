@@ -1,88 +1,115 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
 using System.Web.Mvc;
+using System.Web.Security;
+using AutoMapper;
 using OnlineBanking.Models;
-using OnlineBanking.Models.Repo;
-using Autofac;
-using Autofac.Core;
+using OnlineBanking.Models.Account;
 using OnlineBanking.Models.Contract;
-using  OnlineBanking.Service;
 using OnlineBanking.Models.Contract.Repo;
+using OnlineBanking.Models.Repo;
+using OnlineBanking.Service;
 using Filter = OnlineBanking.Models.Filter;
-
-
 
 namespace OnlineBanking.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private IReadRepository<Status> mReadRepository;
-        private ICreateRepository<Status> mCreateRepository;
-        public HomeController(ICreateRepository<Status> createRepo, IReadRepository<Status> readRepo)
+        private IReadRepository<User> mReadRepository;
+        private ICreateRepository<User> mCreateRepository;
+        private IUpdateRepository<User> mUpdateRepository;
+
+        public HomeController(ICreateRepository<User> createRepo, IReadRepository<User> readRepo,
+            IUpdateRepository<User> updateRepo)
         {
+
             mCreateRepository = createRepo;
             mReadRepository = readRepo;
+            mUpdateRepository = updateRepo;
         }
 
-        public Action HandleAjaxRequest(Action action)
-        {
-            try
-            {
-                var result = action();
-                return result;
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
-      
+        [HttpGet]
         public ActionResult Index()
         {
-            var status = new Status()
-            {
-                Name = "new"
-            };
-
-            var filter = new Filter()
-            {
-                Name = "new"
-            };
-  
-
-           // var result = HandleAjaxRequest(mReadRepository.GetAll());
-
-
-
-
-            var res = mReadRepository.GetAll(x => x.Name == "new");
-
-            //var client = new Client()
-            //{
-            //    FirstName = "name1",
-            //    DateOfBirth = DateTime.Now,
-            //    LastName = "gfhj"
-            //}}
             return View();
         }
 
+        [HttpGet]
         public ActionResult Login()
         {
-           
-
             return View();
         }
 
-        public ActionResult Contact()
+        [HttpPost]
+        public ActionResult Login(UserLogin user)
         {
-            ViewBag.Message = "Your contact page.";
+            if (ModelState.IsValid)
+            {
+                var dbUser = TryAction(() => mReadRepository.GetFirstOfDefault(x => x.Login == user.Login)) ;
+
+                if (dbUser == null)
+                {
+                    ModelState.AddModelError("", "User not found");
+                    return View(user);
+                }
+
+                if (!dbUser.IsBlocked)
+                {
+                    if (dbUser.Password == user.Password)
+                    {
+                        FormsAuthentication.SetAuthCookie(dbUser.Name, true);
+                        dbUser.CountAttemptsToAccess = 0;
+                        PerformCall(() => mUpdateRepository.Update(dbUser));
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        dbUser.CountAttemptsToAccess ++;
+                        if (dbUser.CountAttemptsToAccess == 5)
+                        {
+                            ModelState.AddModelError("", "User is blocked");
+                            dbUser.IsBlocked = true;
+                            PerformCall(() => mUpdateRepository.Update(dbUser));
+                            ///TODO: go to inbloked 
+                        }
+                        else
+                        {
+                            PerformCall(() => mUpdateRepository.Update(dbUser));
+                        }
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "User is blocked");
+                    ///TODO: go to inbloked 
+                }
+
+            }
+            return View(user);
+        }
+
+
+        public ActionResult Logoff()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Registration()
+        {
 
             return View();
+        }
+        [HttpPost]
+        public ActionResult Registration(UserRegister user)
+        {
+            if (user.IsValid())
+            {
+                var tempUser = Mapper.Map<UserRegister, User>(user);
+                tempUser.RoleId = 2;
+                PerformCall(() => mCreateRepository.Create(tempUser));
+                return RedirectToAction("Index");
+            }
+            return View(user);
         }
     }
 }

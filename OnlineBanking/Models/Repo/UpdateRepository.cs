@@ -1,27 +1,25 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using OnlineBanking.Models.Contract;
 using OnlineBanking.Models.Contract.Repo;
 
 namespace OnlineBanking.Models.Repo
 {
-    public class UpdateRepository : IUpdateRepository
+    public class UpdateRepository<T> : BaseRepository, IUpdateRepository<T> where T : class, IEntity
     {
+        public UpdateRepository(DbContext context) : base(context) { }
 
-        protected DbContext mContext;
-        public UpdateRepository(DbContext context)
+        public void Update(T entity)
         {
-            mContext = context;
-        }
-
-        public void Update(IEntity entity)
-        {
-            var temp = mContext.Set<IEntity>().Find(entity.Id);
+            var temp = mContext.Set<T>().Find(entity.Id);
             if ((temp != null))
             {
-                mContext.Entry(temp).State = EntityState.Modified;
+                mContext.Entry(entity).State = EntityState.Modified;
                 mContext.SaveChanges();
             }
        
         }
+
+       
     }
 }

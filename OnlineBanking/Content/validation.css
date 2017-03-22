@@ -16,7 +16,7 @@
 }
 .info {
         text-align: left;
-        padding: 5px;
+        padding: 10px;
         font-size: 11px;
         color: #fff;
         position: absolute;
@@ -28,3 +28,5 @@
         -moz-box-shadow: -1px 1px 2px #a9a9a9;
         box-shadow: -1px 1px 2px #a9a9a9;
 }
+
+

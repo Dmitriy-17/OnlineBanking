@@ -5,16 +5,14 @@ using OnlineBanking.Models.Contract.Repo;
 
 namespace OnlineBanking.Models.Repo
 {
-    public class CreateRepository<T> : ICreateRepository<T> where T : class, IEntity
+    public class CreateRepository<T> : BaseRepository, ICreateRepository<T> where T : class, IEntity
     {
-        protected DbContext mContext;
 
-        public CreateRepository(DbContext context)
+        public CreateRepository(DbContext context) : base(context)
         {
-            mContext = context;
         }
 
-        public  void CreateAsync(T entity)
+        public void Create(T entity)
         {
             mContext.Set<T>().Add(entity);
             mContext.SaveChanges();

@@ -9,6 +9,8 @@ namespace OnlineBanking.Models.Contract.Repo
     public interface IReadRepository<T>
     {
         Task<IEntity> GetByIdAsync(int id);
-        IEnumerable<IEntity> GetAll(Func<T, bool> predicate = null);
+        IEnumerable<T> GetAll(Func<T, bool> predicate = null);
+        T GetFirstOfDefault(Func<T, bool> predicate = null);
+
     }
 }

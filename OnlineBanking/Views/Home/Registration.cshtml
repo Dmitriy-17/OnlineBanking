@@ -1,0 +1,67 @@
+﻿@model OnlineBanking.Models.Account.UserRegister
+@{
+    ViewBag.Title = "Registration";
+}
+
+<div class="center-block">
+
+    <form class="form-horizontal" id="regForm" method="POST">
+
+        <div class="form-group">
+            <label for="login" class="col-sm-2 control-label">Login</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" name="Login" id="login" placeholder="Login">
+                @Html.ValidationMessageFor(model => model.Login)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" name="Name" id="name" placeholder="Name">
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-5">
+                <input type="password"  name="Password" class="form-control" id="password" placeholder="Password">
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword" class="col-sm-2 control-label">Confirm Password</label>
+            <div class="col-sm-5">
+                <input type="password" name="ConfirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm Password">
+                @Html.ValidationMessageFor(model => model.ConfirmPassword)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-5">
+                <input type="email" class="form-control" name="Email" id="email" placeholder="Email">
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="address" class="col-sm-2 control-label">Address</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" name="Address" id="address" placeholder="address">
+                @Html.ValidationMessageFor(model => model.Address)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" id="sendReg" class="btn btn-default">Submit</button>
+            </div>
+        </div>
+    </form> 
+</div>

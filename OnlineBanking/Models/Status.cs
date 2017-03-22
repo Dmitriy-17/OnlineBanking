@@ -9,11 +9,11 @@ namespace OnlineBanking.Models
         [ScaffoldColumn(false)]
         public int Id { get; set; }
         public  string Name { get; set; }
-        public virtual ICollection<Client> Clients { get; set; }
+        //public virtual ICollection<Client> Clients { get; set; }
    
-        public Status()
-        {
-            Clients = new List<Client>();
-        }
+        //public Status()
+        //{
+        //    Clients = new List<Client>();
+        //}
     }
 }

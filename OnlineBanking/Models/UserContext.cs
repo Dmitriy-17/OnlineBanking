@@ -10,5 +10,13 @@ namespace OnlineBanking.Models
         public virtual DbSet<Status> Statuses { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            var foo = modelBuilder.Entity<Client>();
+            foo.Property(f => f.DateOfBirth).HasColumnType("smalldatetime");
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

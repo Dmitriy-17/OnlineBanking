@@ -1,0 +1,60 @@
+﻿<md-dialog flex="50">
+    <form name="regForm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{text.title}}</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+
+        <md-content md-theme="docs-dark" layout-gt-sm="column" layout-padding>
+            <div layout="row" layout-align="space-between">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>First Name</label>
+                    <md-icon><i class="material-icons">person</i></md-icon>
+                    <input required name="FirstName" maxlength="20" minlength="3" ng-model="client.FirstName" />
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Last Name</label>
+                    <md-icon><i class="material-icons">person</i></md-icon>
+                    <input required name="LastName" maxlength="20" minlength="3" ng-model="client.LastName" />
+                </md-input-container>
+            </div>
+            <div layout="row" layout-align="space-between">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Phone</label>
+                    <md-icon><i class="material-icons">phone</i></md-icon>
+                    <input input type="tel" required name="PhoneNumber" maxlength="13" minlength="6" pattern="(\+?\d[- .]*){7,13}" ng-model="client.Phone">
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Status</label>
+                    <md-icon><i class="material-icons">directions_car</i></md-icon>
+                    <md-select ng-model="client.StatusId">
+                        <md-option ng-repeat="status in clientStatuses" ng-value="status.Id">
+                            {{clientStatuses[status.Id - 1].Name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout="row" layout-align="space-between">
+                <md-input-container ng-show="addNew" class="md-block" flex-gt-sm>
+                    <label>Birthdate</label>
+                    <md-datepicker required name="Birthdate" md-max-date="maxDate" ng-model="client.DateOfBirth"></md-datepicker>
+                </md-input-container>
+                <md-input-container ng-show="addNew" class="md-block" flex-gt-sm>
+                    <label>Contract number</label>
+                    <md-icon><i class="material-icons">person</i></md-icon>
+                    <input required name="ContractNumber" maxlength="7" minlength="7" type="tel" ng-model="client.ContractNumber" />
+                </md-input-container>
+                <div style="text-align: center; margin-top: 20px" flex-gt-sm>
+                    <span>Deposit</span>
+                    <input input type="checkbox" name="Deposit" ng-model="client.Deposit">
+                </div>
+             </div>
+</md-content>
+        <md-dialog-actions layout="row">
+            <md-button ng-click="cancel()" class="md-raised">Отмена</md-button>
+            <md-button ng-disabled="regForm.$invalid" ng-click="addNew ?add(user) : update(client)" class="md-raised md-primary">{{text.button}}</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

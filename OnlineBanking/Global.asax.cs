@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Linq;
+using System.Net.Http.Formatting;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -14,9 +15,9 @@ namespace OnlineBanking
     {
         protected void Application_Start()
         {
-
+            Logger.InitLogger();
             Database.SetInitializer(new UserDbInitializer());
-
+            Bootstrap.InitMapper();
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -24,6 +25,8 @@ namespace OnlineBanking
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutofacConfig.ConfigureContainer();
 
+
+            
         }
     }
 }

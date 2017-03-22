@@ -10,27 +10,32 @@ using System.Linq.Expressions;
 
 namespace OnlineBanking.Models.Repo
 {
-    public class ReadRepository<T> : IReadRepository<T> where T : class, IEntity 
+    public class ReadRepository<T> : BaseRepository, IReadRepository<T> where T : class, IEntity 
     {
-        protected DbContext mContext;
-        public ReadRepository(DbContext context)
-        {
-            mContext = context;
-        }
+        public ReadRepository(DbContext context) : base(context) { }
 
         public async Task<IEntity> GetByIdAsync(int id)
         {
             return await mContext.Set<T>().FindAsync(id);
         }
 
-        public IEnumerable<IEntity> GetAll(Func<T, bool> predicate = null)
+        public IEnumerable<T> GetAll(Func<T, bool> predicate = null)
         {
             if (predicate == null)
             {
                 return mContext.Set<T>().ToList();
             }
-            var result = mContext.Set<T>().Where(predicate).ToList();
+            var result = mContext.Set<T>().Where(predicate);
             return result;
+        }
+
+        public T GetFirstOfDefault(Func<T, bool> predicate)
+        {
+            if (predicate != null)
+            {
+                return mContext.Set<T>().FirstOrDefault(predicate);
+            }
+            return null;
         }
     }
 }

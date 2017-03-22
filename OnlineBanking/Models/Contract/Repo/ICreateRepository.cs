@@ -8,7 +8,7 @@ namespace OnlineBanking.Models.Contract.Repo
 {
     public interface ICreateRepository<IEntity>
     {
-        void CreateAsync(IEntity entity);
+        void Create(IEntity entity);
 
     }
 }

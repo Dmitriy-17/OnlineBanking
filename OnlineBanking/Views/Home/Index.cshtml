@@ -1,3 +1,36 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<div ng-controller="ClientsController" data-ng-init="loadClients()">
+    <md-button ng-click="addclientDialog($event)" md-no-ink class="md-primary"><md-icon><i class="material-icons">add</i></md-icon></md-button>
+    <table class="table table-striped table-responsive table-hover">
+        <thead class="">
+        <tr>
+            <th>Client contact number</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Date of birth</th>
+            <th>Phone number</th>
+            <th>Status</th>
+            <th>Deposit</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr style="font-weight: 600; font-size: 11px" ng-repeat="client in clients" ng-dblclick="editclientDialog($event, client)">
+            <td>{{client.ContractNumber}}</td>
+            <td>{{client.FirstName}}</td>
+            <td>{{client.LastName}}</td>
+            <td>{{client.DateOfBirth}}</td>
+            <td>{{client.Phone}}</td>
+            <td>{{client.Status.Name}}</td>
+            <td>{{client.Deposit}}</td>
+            <td>
+                <button type="button" ng-click="removeTariffDialog($event, tarrif)" class="btn btn-link">
+                    <span class="glyphicon glyphicon-remove-circle" style="color: red; font-size: 22px; font-weight: 100" uib-dropdown-toggle></span>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
