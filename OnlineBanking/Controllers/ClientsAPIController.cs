@@ -15,7 +15,7 @@ using OnlineBanking.Models.Repo;
 
 namespace OnlineBanking.Controllers
 {
-
+    [Authorize]
     public class ClientsController : BaseAPIController
     {
         private IReadRepository<Client> mReadRepository;

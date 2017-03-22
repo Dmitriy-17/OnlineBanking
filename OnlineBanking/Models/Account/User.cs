@@ -1,7 +1,5 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using OnlineBanking.Models.Contract;
-using OnlineBanking.Service;
 
 namespace OnlineBanking.Models.Account
 {

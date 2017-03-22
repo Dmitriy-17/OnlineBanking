@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using OnlineBanking.Models.Contract;
 using OnlineBanking.Models.Contract.Repo;
-using System.Data.Entity;
-using System.Linq.Expressions;
 
 namespace OnlineBanking.Models.Repo
 {

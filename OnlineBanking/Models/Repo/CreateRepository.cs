@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity;
-using System.Threading.Tasks;
 using OnlineBanking.Models.Contract;
 using OnlineBanking.Models.Contract.Repo;
 
